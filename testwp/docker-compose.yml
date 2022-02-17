@@ -22,9 +22,9 @@ services:
       - db
     ports:
       - 56395:80
-#    volumes:
+    volumes:
 
-#      - ./plugin:/var/www/html/wp-content/plugins/mintgate-verifier
+      - ./acaiBowl:/var/www/html/wp-content/plugins/acaiBowl
 #     Uncomment the following line, to debug wordpress php code    
 #      - ./filesForDebug:/var/www/html
     environment:
