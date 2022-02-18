@@ -16,23 +16,23 @@ class AcaiBowl_Ep {
 	public function register_api(){
 
 		/*
-		register_rest_route( 'ne-mintgate/v1', '/wallet/(?P<id>\d+)', array(
+		register_rest_route( 'acaibowl/v1', '/wallet/(?P<id>\d+)', array(
 			'methods' => 'GET',
 			'callback' => array($this,'checkWallet'),
 		  ) );
 		*/
 
-		register_rest_route( 'ne-mintgate/v1', '/wallet', array(
+		register_rest_route( 'acaibowl/v1', '/wallet', array(
 			'methods' => 'POST',
 			'callback' => array($this,'checkWallet'),
 		) );
 
-		register_rest_route( 'ne-mintgate/v1', '/content/(?P<id>.+)', array(
+		register_rest_route( 'acaibowl/v1', '/content/(?P<id>.+)', array(
 			'methods' => 'GET',
 			'callback' => array($this,'getContent'),
 		) );
 
-        register_rest_route( 'ne-mintgate/v1', '/signout', array(
+        register_rest_route( 'acaibowl/v1', '/signout', array(
 			'methods' => 'GET',
 			'callback' => array($this,'signOut'),
 		) );
@@ -51,8 +51,58 @@ class AcaiBowl_Ep {
         return rest_ensure_response("done"); 
     }
 
+	public function getContent(WP_REST_Request $request ) {
+		//xdebug_break();
 
-    public function getContent(WP_REST_Request $request ) {
+        $return = array(
+            "status"=>"error"
+        );
+		try
+		{
+			$postId = $request->get_param('id');
+			
+			if(strlen($postId) == 0){
+				throw new Exception('no postId found');
+			}
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wallet-data.php';
+			$wallet =  WalletData::fromSession();
+
+            if(isset($wallet) && isset($wallet->nounce)){
+                $return["nounce"] = $wallet->nounce;
+            }
+
+            $options = get_option( 'acaibowl_plugin_options' );
+
+
+            $tokenId = get_post_meta( $postId, 'mintgate_meta_link_value_key', true );
+
+            if (strlen($tokenId) == 0 ){
+                //it should never be here
+                throw new Exception('token id is not set');
+            }
+
+            {
+
+                $content = get_the_content( null, false, $postId);
+    
+                $content = apply_filters( 'the_content', $content );
+
+
+                $return["status"] = "success";
+                $return["content"] = $content;
+                return rest_ensure_response($return);    
+            }
+
+		}
+		catch(Exception $e) {
+            $return["status"] = "error";
+            $return["error"] = $e->getMessage();
+			return rest_ensure_response($return);
+		}
+	}
+
+    public function getContent_OLD(WP_REST_Request $request ) {
 		//xdebug_break();
 
         $return = array(
@@ -157,7 +207,7 @@ class AcaiBowl_Ep {
 		}
 	}
 
-	//availbale at http://localhost:56395/?rest_route=/ne-mintgate/v1/wallet/1
+	//availbale at http://localhost:56395/?rest_route=/acaibowl/v1/wallet/1
 
 	public function checkWallet(WP_REST_Request $request ) {
 		// You can access parameters via direct array access on the object:

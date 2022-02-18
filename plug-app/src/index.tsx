@@ -1,7 +1,9 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
 
-import './site.css';
+import './site.scss';
+
+import App from './components/app';
 
 /*
 ReactDOM.render(
@@ -65,7 +67,7 @@ export class AcaiBowlVerifier {
         }
 
         ReactDOM.render(<div className={styleName || 'w3ProviderList'}>
-            <h1 className='test777'>Hello React!</h1>
+            <App postId={this.token.postId}/>
         </div>, rootDiv);
 
         document?.querySelectorAll(`.${this.token.divId}-loading`).forEach(el=> el.remove());
