@@ -105,13 +105,13 @@ class AcaiBowl_Public {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wallet-data.php';
 		$wallet =  WalletData::fromSession();
 
-		return "<div id=\"mint-gated\" "
+		return "<div id=\"acai-gated\" "
 			
 			."tid=\"".esc_attr($tid)."\" "
 			."postId=\"".esc_attr(get_the_ID())."\" "
 		
 			."></div>"
-			."<div class=\"mint-gated-loading\" ><div></div><div></div></div>";
+			."<div class=\"acai-gated-loading\" ><div></div><div></div></div>";
 
 	}
 
@@ -156,7 +156,7 @@ class AcaiBowl_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/AcaiBowl-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dist/acai-verify.css', array(), $this->version, 'all' );
 
 	}
 
@@ -168,7 +168,7 @@ class AcaiBowl_Public {
 	public function enqueue_scripts() {
 
 		//xdebug_break();
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dist/mint-verifier.js', null, $this->version, true );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dist/acai-verify.js', null, $this->version, true );
 
 	}
 
