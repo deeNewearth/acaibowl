@@ -3,6 +3,8 @@ const prod = process.env.NODE_ENV === 'production';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
 const outPath = 
 
 module.exports = {
@@ -46,5 +48,8 @@ module.exports = {
       template: 'index.html',
     }),*/
     new MiniCssExtractPlugin(),
+    new NodePolyfillPlugin({
+      excludeAliases: ["console"]
+    }),
   ],
 };

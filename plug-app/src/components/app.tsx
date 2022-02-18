@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Form, Spinner} from 'react-bootstrap';
 import { IAsyncResult, ShowError, fetchJsonAsync } from './utils';
+import { LitProvider, useLit} from './lit';
 
 type WPContent = {
     status?: string,
@@ -10,11 +11,21 @@ type WPContent = {
     nounce?: string
 };
 
-export default function Gate({postId}:{
+export default function GateHolder({postId}:{
+    postId:string;
+}){
+    return <LitProvider>
+        <Gate {...{postId}}/>
+    </LitProvider>;
+}
+
+export function Gate({postId}:{
     postId:string;
 }){
     const [allowed, setAllowed] =useState(false);
     const [content,setContent] = useState<IAsyncResult<WPContent>>();
+
+    const k = useLit();
 
     useEffect(()=>{
         if(!allowed || !!content?.result){
