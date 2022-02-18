@@ -1,0 +1,37 @@
+Hi Dee 
+
+- I've been playing around with LIT yesterday & today and have added to their sample index.html a few of their other methods. Please see the zipped file attached.
+
+I hope this can give you a head start on messing with this tool. The methods below are all in the index.html in the zip file. You'll need "npm install lit"
+
+I sent a few other points about working with this tool on the team's discord channel - limitations and the URL to the SDK, which is fairly well written.Here's the SDK again
+https://lit-protocol.github.io/lit-js-sdk/api_docs_html/index.html
+
+Talk to you soon. I will be on Discord for most of the day - let me know when you plan to be in the Castle, the Art hotel or where ever. Castle is open - upper floors are quieter
+
+------------------methods I've tested--------------
+see mintNft func: from their examples
+
+see litJsSdkLoaded func: from their examples
+
+see provisionAccess func: from their examples
+
+see verifyJwt func: from their examples
+
+see requestJwt func: from their examples
+
+see sendToken func:
+    was able to send a LIT from one account to another
+        LitJsSdk.sendLIT
+
+see findTokensByAddr func:
+    was able to return a promise, never resolved, put probably working
+        LitJsSdk.findLITs
+
+see encryptFileToDataURL func:
+     was able to make this work - not sure if we need it
+         LitJsSdk.fileToDataUrl
+
+see iFrameInjection func:
+    unable to get this to work yet - probably a problem with my syntax or methodology. But I            thought we might be able to use this
+LitJsSdk.injectViewerIFrame
