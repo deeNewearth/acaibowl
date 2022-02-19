@@ -25,6 +25,7 @@ services:
     volumes:
 
       - ./acaiBowl:/var/www/html/wp-content/plugins/acaiBowl
+      - ./rtheme:/var/www/html/wp-content/themes/rtheme
 #     Uncomment the following line, to debug wordpress php code    
 #      - ./filesForDebug:/var/www/html
     environment:

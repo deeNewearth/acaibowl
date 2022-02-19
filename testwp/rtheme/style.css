@@ -9,3 +9,97 @@ License: MIT
 License URI: https://mit-license.org/
 Text Domain: barebones
 */
+#background {
+    background: rgba(0, 0, 0, 0.7) url('https://images.squarespace-cdn.com/content/v1/61d7261e14d4b203bb2fec07/136b1d90-caa3-4abe-b8e7-f466f672dcaa/20190922_115528.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+a:link {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orangeFont {
+    color: #ff6347;
+}
+
+.pageFont {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 950;
+    letter-spacing: 2px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+}
+
+.largeTitle {
+    font-size: 24px;
+    color: white;
+}
+
+button {
+    display: inline-block;
+    background-color: white;
+    border: 4px double white;
+    color: #ff6347;
+    border-width: 1px;
+    border-color: #ff6347;
+    text-align: center;
+    font-size: 16px;
+    padding: 5px;
+    width: 200px;
+    height: 50px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.centerMenu {
+    color: white;
+    text-align: center;
+}
+
+.header-img {
+    width: 170px;
+    height: 150px;
+    margin-left: 20px;
+    margin-top: 50px;
+}
