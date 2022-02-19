@@ -39,6 +39,8 @@ function useLoadLit(){
     
                 await mint('8');
 
+                //throw new Error('i m bad');
+
                 const r =await checkAccess('8');
        
             }catch(error:any){
