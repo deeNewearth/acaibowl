@@ -3829,10 +3829,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-lit-js-sdk@^1.1.122:
-  version "1.1.122"
-  resolved "https://registry.yarnpkg.com/lit-js-sdk/-/lit-js-sdk-1.1.122.tgz#a30b20c825f20272642bdf951e2a997292e840c2"
-  integrity sha512-JafbltVOE0QsOKAW3s4T3wCd/DMdKh6WUTuNpv8bXdNl5+Z5LQE3snbkM0ORPibEywppzLtOheJuG0LABIcdtg==
+lit-js-sdk@^1.1.25:
+  version "1.1.124"
+  resolved "https://registry.yarnpkg.com/lit-js-sdk/-/lit-js-sdk-1.1.124.tgz#97252455e86bcfd7e02d995095adffc860fb8411"
+  integrity sha512-9VWjS5V3yyGelDVS74E32EeyFXfr4k1oKvzDEjo+dO2pfSeJFZMcGBYKmVcpPrVi/+LDRmCfGceradblQfeTtw==
   dependencies:
     "@ethersproject/abi" "^5.5.0"
     "@ethersproject/bytes" "^5.5.0"

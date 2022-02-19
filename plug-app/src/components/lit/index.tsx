@@ -61,11 +61,11 @@ function useLoadLit(){
         } = await LitJsSdk.mintLIT({ chain: wpChain, quantity: 1 });
 
         myMint = {
-        wpTokenId: tokenId,
-        wpTxHash: txHash,
-        wpTokenAddr:  tokenId,
-        wpAuthSig: authSig,
-        wpMintingAddr: mintingAddress
+            wpTokenId: tokenId,
+            wpTxHash: txHash,
+            wpTokenAddr:  tokenId,
+            wpAuthSig: authSig,
+            wpMintingAddr: mintingAddress
         };
 
         wpAccessControlConditions[0].parameters= [
@@ -75,7 +75,6 @@ function useLoadLit(){
     }
 
     async function checkAccess(postId:string){
-debugger;
         await provisionAccess();
         await requestJwt();
         const retVal: boolean = await verifyJwt();
@@ -95,10 +94,9 @@ debugger;
     }
     // successful test - this is one of the stock tests that came with the downloaded package    
     async function provisionAccess() {
-debugger;        
         const randomUrlPath = "/" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        let myResourceId = {
-          baseUrl: 'my-dynamic-content-server.com', // would this be http://127.0.0.1:3000/ ??
+        const myResourceId = {
+          baseUrl: 'my-dynamic-content-server.com', // in original, it was 'my-dynamic-content-server.com'. Neither one works 'http://localhost:56395'
           path: randomUrlPath, // this would normally be your url path, like "/webpage.html" for example
           orgId: "",
           role: "",
