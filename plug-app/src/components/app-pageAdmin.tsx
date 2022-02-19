@@ -4,21 +4,22 @@ import { IAsyncResult, ShowError, fetchJsonAsync } from './utils';
 import { LitProvider, useLit} from './lit';
 
 import {Button, Modal} from 'react-bootstrap';
+import {usePostData} from '../components/utils/postData';
+
+import Asrarible from '../components/rarible';
 
 
-export default function PageAdmin({rest_auth_nonce}:{
-    rest_auth_nonce:string
-}){
+export default function PageAdmin(){
 
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    
+    const [show, setShow] = useState(true);
+    const postData = usePostData();
     
     useEffect(()=>{
         (async()=>{
             try{
-                //setContent({isLoading:true});
+                //setPostData({isLoading:true});
 
+                /*
                 const result = await fetchJsonAsync<{
                     status:string;
                     user:string;
@@ -30,7 +31,7 @@ export default function PageAdmin({rest_auth_nonce}:{
                         'X-WP-Nonce': rest_auth_nonce,
                       },
                 }));
-
+                */
                 /*
                 user:
 ID: 1
@@ -47,27 +48,35 @@ roles: ['administrator']
                 //setContent({result});
 
             }catch(error:any){
-                //setContent({error});
+                //setPostData({error});
             }
         })();
 
-    },[])
+    },[]);
 
+    if(postData?.isLoading){
+        return <Spinner animation='border' variant="primary"/>
+    }
 
+    if(postData?.error){
+        return <ShowError error={postData.error}/>;
+    }
 
     return <div>
         <Button variant='primary' onClick={()=>setShow(true)}>Mint as NFT</Button>
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={()=>setShow(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Connect to Web3</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+            <Asrarible/>
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={()=>setShow(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={()=>setShow(false)}>
             Save Changes
           </Button>
         </Modal.Footer>

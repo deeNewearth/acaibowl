@@ -108,7 +108,7 @@ debugger;
         await litNodeClient.saveSigningCondition({
           accessControlConditions: wpAccessControlConditions,
           chain: wpChain,
-          authSig: myMint.wpAuthSig,
+          authSig: myMint?.wpAuthSig,
           resourceId: myResourceId
         })
     }
@@ -119,7 +119,7 @@ debugger;
         wpJwt = await litNodeClient.getSignedToken({
           accessControlConditions: wpAccessControlConditions,
           chain: wpChain,
-          authSig: myMint.wpAuthSig,
+          authSig: myMint?.wpAuthSig,
           resourceId: myResourceId
         })
       }
