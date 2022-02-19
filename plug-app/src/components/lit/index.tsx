@@ -13,24 +13,40 @@ function useLoadLit(){
 
     let litNodeClient:any = null;
 
-    function mint(){
+    async function mint(postId:string){
 
     }
 
-    function checkAccess(postId:string){
+    async function checkAccess(postId:string){
 
+        const savedData = {
+            arg1:'888',
+        }
+
+        //litNodeClient.??????? o find access
+
+        return false;
     }
 
 
     useEffect(()=>{
-        try{
-            debugger;
-            litNodeClient = new LitJsSdk.LitNodeClient();
-            litNodeClient.connect();
-   
-        }catch(error:any){
-            console.error(`failed to load lit ${error}`);
-        }
+
+        (async ()=>{
+            try{
+                debugger;
+                litNodeClient = new LitJsSdk.LitNodeClient();
+                litNodeClient.connect();
+    
+                await mint('8');
+
+                const r =await checkAccess('8');
+       
+            }catch(error:any){
+                console.error(`failed to load lit ${error}`);
+            }
+                
+        })();
+
     },[]);
 
     return {
