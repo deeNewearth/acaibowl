@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './site.scss';
 
-import App from './components/app';
+import App from './components/app-verify';
 
 /*
 ReactDOM.render(
@@ -60,6 +60,8 @@ export class AcaiBowlVerifier {
 
 
         const rootDiv = document?.getElementById(this.token.divId);
+
+        //this div is delay loaded so we need to loop here
 
         if (!rootDiv) {
             console.error(`div id ${this.token?.divId} NOT found`);

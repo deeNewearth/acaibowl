@@ -37,6 +37,11 @@ class AcaiBowl_Ep {
 			'callback' => array($this,'signOut'),
 		) );
 
+		register_rest_route( 'acaibowl/v1', '/pageAdmin', array(
+			'methods' => 'POST',
+			'callback' => array($this,'pageAdmin'),
+		) );
+
 	}
 
     public function signOut(WP_REST_Request $request ) {
@@ -208,6 +213,26 @@ class AcaiBowl_Ep {
 	}
 
 	//availbale at http://localhost:56395/?rest_route=/acaibowl/v1/wallet/1
+
+	public function pageAdmin(WP_REST_Request $request ) {
+
+		try
+		{
+			global $current_user;
+
+			return rest_ensure_response(array(
+				"status"=>"done",
+				"user"=>$current_user
+			));
+		}
+		catch(Exception $e) {
+
+			return rest_ensure_response(array(
+				"status"=>"error",
+				"error"=>$e->getMessage()
+			));
+		}
+}
 
 	public function checkWallet(WP_REST_Request $request ) {
 		// You can access parameters via direct array access on the object:

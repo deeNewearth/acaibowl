@@ -230,7 +230,21 @@ class AcaiBowl_Admin {
 				placeholder="something like : MXU6DPSWB6EP"
 				 value="<?php echo esc_attr( $value ); ?>" size="25" />
 
-		<p><small>If short ID is filled, this content will be gated using Mintgate</small></p>
+		<p><small>If short ID is filled, this content will be gated using Mintgate
+
+		current user : <?php 
+		global $current_user;
+		echo $current_user->ID;
+		?>
+
+		</small></p>
+
+		<div 
+			id="acaibowl-pageadmin" 
+			postId="<?php echo  esc_attr($post->ID)?>"
+			rest_auth_nonce="<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ) ?>"
+		>
+		</div>
         <?php
     }
 
@@ -257,6 +271,7 @@ class AcaiBowl_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/AcaiBowl-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name.'padmin', plugin_dir_url( __FILE__ ) . 'js/dist/acai-padmin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -280,6 +295,8 @@ class AcaiBowl_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/AcaiBowl-admin.js', array( 'jquery' ), $this->version, false );
+
+		wp_enqueue_script( $this->plugin_name.'padmin', plugin_dir_url( __FILE__ ) . 'js/dist/acai-padmin.js', null, $this->version, true );
 
 	}
 

@@ -5,16 +5,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
-const outPath = 
-
-module.exports = {
+var configCommon = {
   mode: prod ? 'production' : 'development',
-  entry: {
-    "acai-verify":'./src/index.tsx'
-  },
-  output: {
-    path: __dirname + '/../testwp/acaiBowl/public/js/dist/',
-  },
   module: {
     rules: [
       {
@@ -53,3 +45,27 @@ module.exports = {
     }),
   ],
 };
+
+var verifier = Object.assign({}, configCommon, {
+  name: "acai-verify",
+  entry: {
+    "acai-verify":'./src/index-verify.tsx'
+  },
+  output: {
+    path: __dirname + '/../testwp/acaiBowl/public/js/dist/',
+  },
+});
+
+var pageAdmin = Object.assign({}, configCommon, {
+  name: "acai-padmin",
+  entry: {
+    "acai-padmin":'./src/index-pageAdmin.tsx'
+  },
+  output: {
+    path: __dirname + '/../testwp/acaiBowl/admin/js/dist/',
+  },
+});
+
+
+
+module.exports = [verifier,pageAdmin];
