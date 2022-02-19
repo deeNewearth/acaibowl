@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import './site.scss';
 import App from './components/app-pageAdmin';
 import {PostDataProvider} from './components/utils/postData';
+import {Web3Provider} from './components/web3';
 
 /*
 ReactDOM.render(
@@ -63,9 +64,11 @@ export class AcaiBowlPageAdmin {
         const mintInfo = rootDiv.getAttribute('mintInfo')||'';
 
         ReactDOM.render(<div className={styleName || 'w3ProviderList'}>
+            <Web3Provider>
             <PostDataProvider {...{rest_auth_nonce,images,mintInfo,postId}} >
                 <App  />
             </PostDataProvider>
+            </Web3Provider>
         </div>, rootDiv);
 
         document?.querySelectorAll(`.${this.token.divId}-loading`).forEach(el=> el.remove());

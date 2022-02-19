@@ -1,0 +1,29 @@
+.txModal{
+
+    .vBscScan{
+        background-image: url('./open_in_new.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: right;
+        padding-right: 1.5rem;
+    }
+
+    .txDone{
+        background-image: url('./loading.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 15rem;
+        height: 15rem;
+}
+
+    .bigSpinner{
+
+        .spinner-border{
+            width: 15rem;
+            height: 15rem;
+        }
+
+    }
+
+}

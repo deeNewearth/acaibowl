@@ -1,13 +1,15 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {Form, Spinner} from 'react-bootstrap';
 import { IAsyncResult, ShowError, fetchJsonAsync } from './index';
 import constate from "constate";
+
+type MinInfoList ={[key:string]:string};
 
 export type MintInfo = {
     postId:string;
     rest_auth_nonce:string;
     images:{id:string;url:string}[]|undefined;
-    mintInfo:{[key:string]:string}|undefined;
+    mintInfo:MinInfoList|undefined;
 }
 
 export const [PostDataProvider, usePostData, useUpdateData] = constate(
@@ -25,17 +27,19 @@ function useLoadPost({rest_auth_nonce, images,mintInfo,postId}:{
 }){
 
     const [postData, setPostData] = useState<IAsyncResult<MintInfo>>();  
+    const postDataRef = useRef<MinInfoList>();
 
     const updateData = useCallback(async (key:string,data:string)=>{
 
-        debugger;
-        const newMintInfo = {...postData?.result?.mintInfo};
+        
+        const newMintInfo = {...postDataRef.current};
+        
         newMintInfo[key] = data;
 
         const mintInfoSerialized = JSON.stringify(newMintInfo);
 
 
-        const result = await fetchJsonAsync<{
+        const done = await fetchJsonAsync<{
             status:string;
             user:string;
             error?:string;
@@ -48,10 +52,14 @@ function useLoadPost({rest_auth_nonce, images,mintInfo,postId}:{
             body:JSON.stringify({mintInfoSerialized,postId:postData?.result?.postId})
         }));
 
+        const result = {...postData?.result,mintInfo:newMintInfo} as any;
 
-        setPostData({result:{...postData?.result,mintInfo:newMintInfo} as any});
+        
 
-        debugger;
+        postDataRef.current = newMintInfo;
+        setPostData({result});
+
+        
 
     },[postData]);
     
@@ -68,6 +76,7 @@ function useLoadPost({rest_auth_nonce, images,mintInfo,postId}:{
                     mintInfo: mintInfo && JSON.parse(mintInfo) || undefined
                 }
 
+                postDataRef.current = result.mintInfo;
                 setPostData({result});
 
             }catch(error:any){
