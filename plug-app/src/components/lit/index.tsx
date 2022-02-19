@@ -8,13 +8,36 @@ export const [LitProvider,
         v => v.ctx,
     );
 
+type wpMintInfo = {
+    wpTokenId: string;
+    wpTxHash: string;
+    wpTokenAddr: string;
+    wpAuthSig: string;
+    wpMintingAddr: string;
+
+}
 
 function useLoadLit(){
 
     let litNodeClient:any = null;
+    let wpChain = 'mumbai';
+    let myMint: wpMintInfo;
 
     async function mint(postId:string){
-
+        const {
+            txHash,
+            tokenId,
+            tokenAddress,
+            mintingAddress,
+            authSig
+        } = await LitJsSdk.mintLIT({ chain: wpChain, quantity: 1 })
+        myMint = {
+        wpTokenId: tokenId,
+        wpTxHash: txHash,
+        wpTokenAddr:  tokenId,
+        wpAuthSig: authSig,
+        wpMintingAddr: mintingAddress
+        } 
     }
 
     async function checkAccess(postId:string){
@@ -36,7 +59,8 @@ function useLoadLit(){
                 debugger;
                 litNodeClient = new LitJsSdk.LitNodeClient();
                 litNodeClient.connect();
-    
+                let j = 4;
+
                 await mint('8');
 
                 //throw new Error('i m bad');
