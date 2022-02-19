@@ -92,6 +92,20 @@ button {
     margin: 5px;
 }
 
+.post__title{
+    text-align: center;
+    color: #ff6347;
+}
+
+.test-style {
+    color: #ff6347;
+    text-align: center;
+}
+
+.test-style .wp-block-image{
+    display: inline-block;
+    margin: 2em;
+}
 .centerMenu {
     color: white;
     text-align: center;
@@ -102,4 +116,13 @@ button {
     height: 150px;
     margin-left: 20px;
     margin-top: 50px;
+}
+
+.wp-block-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 50%;
 }

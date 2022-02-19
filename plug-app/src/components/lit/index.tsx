@@ -75,6 +75,7 @@ function useLoadLit(){
     }
 
     async function checkAccess(postId:string){
+debugger;
         await provisionAccess();
         await requestJwt();
         const retVal: boolean = await verifyJwt();
@@ -93,7 +94,7 @@ function useLoadLit(){
         return false;
     }
     // successful test - this is one of the stock tests that came with the downloaded package    
-    async function provisionAccess() {
+    async function provisionAccess() {      
         const randomUrlPath = "/" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         const myResourceId = {
           baseUrl: 'my-dynamic-content-server.com', // in original, it was 'my-dynamic-content-server.com'. Neither one works 'http://localhost:56395'
@@ -101,7 +102,9 @@ function useLoadLit(){
           orgId: "",
           role: "",
           extraData: "here is some extra data"
-        }
+        }  
+        console.info("myMint info: " + myMint.wpAuthSig);
+        console.info("BaseURI info: " + myResourceId.baseUrl);
         await litNodeClient.saveSigningCondition({
           accessControlConditions: wpAccessControlConditions,
           chain: wpChain,
