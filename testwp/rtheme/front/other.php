@@ -18,11 +18,12 @@ get_header();
     <article <?php post_class(); ?>>
 
         <header class="post__header" role="heading">
-            <h1 class="post__title"><?php the_title(); ?></h1>
+            <h1 class="post__title orange-font"><?php the_title(); ?></h1>
         </header>
 
-        <?php the_content(); ?>
-
+        <div class='test-style orange-font'>
+            <?php the_content(); ?>
+        </div>
         <footer class="post__footer">
             <p class="post__date">
                 <time><?php echo human_time_diff(strtotime($post->post_date)) . ' ' . __('ago'); ?></time></p>
