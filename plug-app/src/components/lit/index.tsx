@@ -11,10 +11,21 @@ export const [LitProvider,
 
 function useLoadLit(){
 
+    let litNodeClient:any = null;
+
+    function mint(){
+
+    }
+
+    function checkAccess(postId:string){
+
+    }
+
+
     useEffect(()=>{
         try{
             debugger;
-            const litNodeClient = new LitJsSdk.LitNodeClient();
+            litNodeClient = new LitJsSdk.LitNodeClient();
             litNodeClient.connect();
    
         }catch(error:any){
