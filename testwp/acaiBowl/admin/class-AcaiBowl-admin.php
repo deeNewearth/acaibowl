@@ -232,10 +232,26 @@ class AcaiBowl_Admin {
 
 		<p><small>If short ID is filled, this content will be gated using Mintgate
 
-		current user : <?php 
-		global $current_user;
-		echo $current_user->ID;
+		<?php 
+
+		$mintInfo = get_post_meta( $post->ID, 'acaibowl_post_mintinfo', true );
+		
+//		global $current_user;
+		//echo $current_user->ID;
+		//echo $mintInfo;
+
+		$attimages = get_attached_media('image', $post->ID);
+		$imgArray = array();
+		foreach ($attimages as $image) {
+			//echo wp_get_attachment_url($image->ID).' ';
+			$imgObject = new stdClass();
+			$imgObject->id = $image->ID;
+			$imgObject->url = wp_get_attachment_url($image->ID);
+			$imgArray[] = $imgObject;
+		}
+		
 		?>
+
 
 		</small></p>
 
@@ -243,6 +259,8 @@ class AcaiBowl_Admin {
 			id="acaibowl-pageadmin" 
 			postId="<?php echo  esc_attr($post->ID)?>"
 			rest_auth_nonce="<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ) ?>"
+			images="<?php echo esc_attr(json_encode( $imgArray  )) ?>"
+			mintInfo="<?php echo esc_attr($mintInfo) ?>"
 		>
 		</div>
         <?php

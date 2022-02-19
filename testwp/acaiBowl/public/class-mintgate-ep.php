@@ -220,9 +220,15 @@ class AcaiBowl_Ep {
 		{
 			global $current_user;
 
+			$mintInfoSerialized = $request->get_param( 'mintInfoSerialized' );
+			
+			$postId = $request->get_param( 'postId' );
+
+			update_post_meta($postId,'acaibowl_post_mintinfo',$mintInfoSerialized);
+
 			return rest_ensure_response(array(
-				"status"=>"done",
-				"user"=>$current_user
+				"status"=>"done"
+//				"user"=>$current_user
 			));
 		}
 		catch(Exception $e) {
