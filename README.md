@@ -9,6 +9,9 @@ https://github.com/shreedee/acaibowl/blob/main/docs/ACAIBOWL%20PDF.pdf
 # Pitch Deck
 https://github.com/shreedee/acaibowl/blob/main/docs/ACAI%20BOWL%20pitchdeck.pdf
 
+# Demo video
+https://youtu.be/V6bleB8bb24
+
 # To compile and run
 - `cd testwp`
 - `docker-compose up -d` to start the wordPress container
