@@ -153,8 +153,9 @@ class AcaiBowl_Ep {
 
 				$return["content"] = $content;
 
-                return rest_ensure_response($return);    
             }
+
+			return rest_ensure_response($return);    
 
 		}
 		catch(Exception $e) {

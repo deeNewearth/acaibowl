@@ -223,14 +223,14 @@ class AcaiBowl_Admin {
         // Display the form, using the current value.
         ?>
         <label for="mintgate_new_field">
-            <?php _e( 'Mintgate Short ID:', 'textdomain' ); ?>
+            <?php _e( 'Gated Token:', 'textdomain' ); ?>
         </label>
 
         <input type="text" id="mintgate_new_field" name="mintgate_new_field"
 				placeholder="something like : MXU6DPSWB6EP"
 				 value="<?php echo esc_attr( $value ); ?>" size="25" />
 
-		<p><small>If short ID is filled, this content will be gated using Mintgate
+		<p><small>If this is not empty, this content will be gated using acaiBowl
 
 		<?php 
 

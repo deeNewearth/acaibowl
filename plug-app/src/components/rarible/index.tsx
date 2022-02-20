@@ -51,7 +51,7 @@ export default function SaveTorarible() {
 
             return <div className='d-flex align-items-center justify-content-evenly' key={i}>
 
-                <div className='thumbHolder'>
+                <div className='thumbHolder m-2'>
                     <Image src={img.url} fluid thumbnail />
                 </div>
 
@@ -63,9 +63,9 @@ export default function SaveTorarible() {
 
                     {minted?.error && <ShowError error={minted?.error} />}
 
-                    {sellOrder ? <a href={`https://rinkeby.rarible.com/token/${itemId}`} target="_blank">
+                    {sellOrder ? <div><a href={`https://rinkeby.rarible.com/token/${itemId}`} target="_blank">
                         View on Rarible
-                    </a> :
+                    </a></div> :
                         <Button variant="info" disabled={!!minted?.isLoading} onClick={async () => {
                             try {
                                 setMinted({ isLoading: true });
