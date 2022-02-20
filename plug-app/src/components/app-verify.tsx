@@ -1,71 +1,95 @@
-import React, {useState, useEffect} from 'react';
-import {Form, Spinner} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Spinner, Button } from 'react-bootstrap';
 import { IAsyncResult, ShowError, fetchJsonAsync } from './utils';
-import { LitProvider, useLit} from './lit';
+//import { LitProvider, useLit} from './lit';
+import LitJsSdk from 'lit-js-sdk';
 
 type WPContent = {
     status?: string,
     error?: string,
     content?: string,
     address?: string,
-    nounce?: string
+    nounce?: string,
+    hasAccess?: boolean,
+    idsToCheck?: string[],
 };
 
-export default function GateHolder({postId}:{
-    postId:string;
-}){
+export default function GateHolder({ postId }: {
+    postId: string;
+}) {
+    /*
     return <LitProvider>
         <Gate {...{postId}}/>
     </LitProvider>;
+    */
+
+    return <Gate {...{ postId }} />;
 }
 
-export function Gate({postId}:{
-    postId:string;
-}){
-    const [allowed, setAllowed] =useState(false);
-    const [content,setContent] = useState<IAsyncResult<WPContent>>();
+export function Gate({ postId }: {
+    postId: string;
+}) {
+    
+    const [content, setContent] = useState<IAsyncResult<WPContent>>();
 
-    const k = useLit();
+    //const k = useLit();
 
-    useEffect(()=>{
-        if(!allowed || !!content?.result){
-            return;
-        }
+    
+    if (content?.isLoading) {
+        return <Spinner animation="border" variant="primary" />;
+    }
 
-        (async()=>{
-            try{
-                setContent({isLoading:true});
+    if (content?.result?.hasAccess) {
+        return <div>
+            <div dangerouslySetInnerHTML={{ __html: content?.result?.content || "" }} />
+        </div>;
 
-                const result = await fetchJsonAsync<WPContent>(fetch(`/?rest_route=/acaibowl/v1/content/${encodeURIComponent(postId)}`));
-
-                debugger;
-
-                setContent({result});
-
-            }catch(error:any){
-                setContent({error});
-            }
-        })();
-
-    },[allowed])
-
-    if(!allowed){
+    } else {
         return <div>
 
             <h2>The content is gated</h2>
 
-            <Form.Check type="checkbox" checked={!allowed}  label="allow the content" onClick={()=>setAllowed(!allowed)} />
+            {content?.error && <ShowError error={content.error} />}
+
+            <Button variant="info" onClick={async () => {
+                try {
+                    setContent({ isLoading: true });
+
+                    const authSig: {
+                        address: string;
+                    } = await LitJsSdk.checkAndSignAuthMessage({ chain: 'rinkeby' });
+
+                    debugger;
+
+                    //                const result = await fetchJsonAsync<WPContent>(fetch(`/?rest_route=/acaibowl/v1/content/${encodeURIComponent(postId)}`));
+
+                    const result = await fetchJsonAsync<WPContent>(fetch(`/?rest_route=/acaibowl/v1/content`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ postId, address: authSig.address })
+                    }));
+
+
+
+
+                    setContent({ result });
+
+                } catch (error: any) {
+
+
+
+                    if (!error) {
+                        error = new Error('failed to connect');
+                    }
+                    setContent({ error });
+                }
+            }}>
+                Get access using Wallet
+            </Button>
+
         </div>;
     }
 
-    if(content?.isLoading){
-        return <Spinner animation="border" variant="primary"/>;
-    }
-
-    if(content?.error)
-        return <ShowError error={content.error} />;
-
-    return <div>
-        <div dangerouslySetInnerHTML={{ __html: content?.result?.content||"" }} />
-    </div>;
 }

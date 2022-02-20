@@ -37,7 +37,7 @@ const mintFormInitial: MintForm = {
 }
 */
 
-const mintFormInitial: MintForm = {
+export const mintFormInitial: MintForm = {
 	id: "0x1AF7A7555263F275433c6Bb0b8FdCD231F89B1D7", // default collection on "rinkeby" that supports lazy minting
 	type: NftCollectionType.ERC1155,
 	isLazy: true,

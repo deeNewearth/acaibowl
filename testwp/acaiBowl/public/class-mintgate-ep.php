@@ -27,8 +27,16 @@ class AcaiBowl_Ep {
 			'callback' => array($this,'checkWallet'),
 		) );
 
+
+		/*
 		register_rest_route( 'acaibowl/v1', '/content/(?P<id>.+)', array(
 			'methods' => 'GET',
+			'callback' => array($this,'getContent'),
+		) );
+		*/
+
+		register_rest_route( 'acaibowl/v1', '/content', array(
+			'methods' => 'POST',
 			'callback' => array($this,'getContent'),
 		) );
 
@@ -64,11 +72,54 @@ class AcaiBowl_Ep {
         );
 		try
 		{
-			$postId = $request->get_param('id');
+			$postId = $request->get_param('postId');
+			$address = $request->get_param('address');
 			
 			if(strlen($postId) == 0){
 				throw new Exception('no postId found');
 			}
+
+			$access = AcaiBowl_Ep::jsonGet("https://ethereum-api-staging.rarible.org/v0.1/nft/items/byOwner",
+				array(
+					"owner" => $address,
+					"size" => 50
+				)
+				
+			);
+
+			$mintInfo = get_post_meta( $postId, 'acaibowl_post_mintinfo', true );
+
+			//$mintInfo_decoded = json_decode(mintInfo);
+			$mintInfo_decoded = json_decode( html_entity_decode( stripslashes ($mintInfo ) ) );
+
+			$idsToCheck = array();
+			foreach ($mintInfo_decoded as $key => $value) {
+
+				//$idsToCheck[] = $key;
+				
+				if(strpos($key, 'nft_item_img') === 0){
+					$idsToCheck[] = $value;
+				}else{
+					
+				}
+			}
+
+			$hasAccess = false;
+			$accessIds = array();
+			
+			foreach ($access->items as $value) {
+				$accessIds[] = $value->id;
+
+				foreach ($idsToCheck as $toCheck) {
+
+					if($toCheck == $value->id){
+						$hasAccess = true;
+					}
+				}
+
+			}
+
+
 
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wallet-data.php';
 			$wallet =  WalletData::fromSession();
@@ -87,15 +138,21 @@ class AcaiBowl_Ep {
                 throw new Exception('token id is not set');
             }
 
-            {
+			$return["status"] = "success";
+			
+
+			$return["address"] = $address;
+			$return["hasAccess"] = $hasAccess;
+
+			$return["idsToCheck"] = $idsToCheck;
+
+            if($hasAccess){
 
                 $content = get_the_content( null, false, $postId);
-    
                 $content = apply_filters( 'the_content', $content );
 
+				$return["content"] = $content;
 
-                $return["status"] = "success";
-                $return["content"] = $content;
                 return rest_ensure_response($return);    
             }
 
@@ -103,6 +160,7 @@ class AcaiBowl_Ep {
 		catch(Exception $e) {
             $return["status"] = "error";
             $return["error"] = $e->getMessage();
+
 			return rest_ensure_response($return);
 		}
 	}
